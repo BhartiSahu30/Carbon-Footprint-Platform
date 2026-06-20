@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack — Professional Carbon Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
+
+    <!-- Brand Header -->
+    <header class="border-b border-slate-800 bg-slate-950/50 backdrop-blur sticky top-0 z-50 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl font-black text-xl">🌱</span>
+                <h1 class="text-xl font-bold tracking-tight text-white">EcoTrack <span class="text-emerald-400 text-xs font-mono ml-1 px-2 py-0.5 bg-emerald-500/10 rounded">v2.0</span></h1>
+            </div>
+            <input type="date" id="logDate" class="bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-1.5 text-sm focus:outline-emerald-500">
+        </div>
+    </header>
+
+    <!-- App Engine Container -->
+    <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Column 1 & 2: Form Input Architecture -->
+        <div class="lg:col-span-2 space-y-6">
+            <h2 class="text-lg font-bold text-slate-300 tracking-wide uppercase text-xs">Resource Utilization Audit</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Transport Module -->
+                <div class="bg-slate-950 border border-slate-800/80 p-5 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-2 text-emerald-400 font-semibold"><span class="text-lg">🚗</span> Mobility Sector</div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1.5">Engine/Transit Class</label>
+                        <select id="transportType" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white">
+                            <option value="petrol_car">Petrol Vehicle</option>
+                            <option value="diesel_car">Diesel Vehicle</option>
+                            <option value="ev">Electric Vehicle</option>
+                            <option value="transit">Mass Public Transit</option>
+                            <option value="zero">Bicycle / Pedestrian</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 flex justify-between">Distance <span id="lblDistance" class="text-emerald-400">30 km</span></label>
+                        <input type="range" id="distance" min="0" max="200" value="30" class="w-full accent-emerald-500">
+                    </div>
+                </div>
+
+                <!-- Utilities/Energy Module -->
+                <div class="bg-slate-950 border border-slate-800/80 p-5 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-2 text-blue-400 font-semibold"><span class="text-lg">⚡</span> Energy Utilities</div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 flex justify-between">Grid Electricity <span id="lblElectricity" class="text-blue-400">15 kWh</span></label>
+                        <input type="range" id="electricity" min="0" max="60" value="15" class="w-full accent-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 flex justify-between">Natural Gas consumption <span id="lblGas" class="text-blue-400">5 kWh</span></label>
+                        <input type="range" id="gas" min="0" max="40" value="5" class="w-full accent-blue-500">
+                    </div>
+                </div>
+
+                <!-- Diet Module -->
+                <div class="bg-slate-950 border border-slate-800/80 p-5 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-2 text-amber-400 font-semibold"><span class="text-lg">🥗</span> Food & Nutrition</div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1.5">Daily Nutrition Baseline</label>
+                        <select id="dietType" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white">
+                            <option value="heavy_meat">High Protein Meat Heavy</option>
+                            <option value="average" selected>Standard Balanced Omnivore</option>
+                            <option value="vegetarian">Ovo-Lacto Vegetarian</option>
+                            <option value="vegan">Pure Plant-Based Vegan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Waste Management Module -->
+                <div class="bg-slate-950 border border-slate-800/80 p-5 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-2 text-purple-400 font-semibold"><span class="text-lg">🗑️</span> Waste & Material Loop</div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1.5">Disposal Stream Strategy</label>
+                        <select id="wasteType" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white">
+                            <option value="standard">Landfill Bound (Unsorted)</option>
+                            <option value="recycle_pro">High Diversion (Recycled/Composted)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1 flex justify-between">Discarded Volume Weight <span id="lblWaste" class="text-purple-400">2 kg</span></label>
+                        <input type="range" id="wasteWeight" min="0" max="20" value="2" class="w-full accent-purple-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategic Environmental Pipeline Dashboard -->
+            <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl shadow-sm">
+                <h3 class="text-sm font-bold text-slate-400 mb-4">Historical Emissions Log Timeline</h3>
+                <div id="timelineContainer" class="space-y-4 relative border-l border-slate-800 pl-4 ml-2 text-xs">
+                    <!-- Dynamic timeline rows render here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 3: Analytics & Reporting Engine -->
+        <div class="space-y-6">
+            <h2 class="text-lg font-bold text-slate-300 tracking-wide uppercase text-xs">Analytics Desk</h2>
+
+            <!-- Output Metric Boards -->
+            <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl text-center space-y-2">
+                <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Consolidated Log Mass</p>
+                <div class="text-5xl font-black text-white tracking-tight"><span id="lblTotalDaily">0.0</span><span class="text-lg text-slate-500 font-normal ml-1">kg CO₂e</span></div>
+            </div>
+
+            <!-- Visualization Component Frame -->
+            <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl flex flex-col items-center">
+                <h3 class="text-xs text-slate-400 font-bold self-start mb-4 uppercase tracking-wider">Dynamic Sector Footprint</h3>
+                <div class="w-full h-56">
+                    <canvas id="ecoPlatformChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Business Logic JavaScript Driver -->
+    <script>
+        let ecoChart = null;
+
+        // Initialize Today's Date selector default value
+        document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+
+        // Synchronize interactive visual indicators
+        const wireMetricSlider = (id, suffix) => {
+            const el = document.getElementById(id);
+            el.addEventListener('input', (e) => {
+                document.getElementById(`lbl${id.charAt(0).toUpperCase() + id.slice(1)}`).innerText = `${e.target.value} ${suffix}`;
+                syncLogWithServer();
+            });
+        };
+
+        wireMetricSlider('distance', 'km');
+        wireMetricSlider('electricity', 'kWh');
+        wireMetricSlider('gas', 'kWh');
+        wireMetricSlider('wasteWeight', 'kg');
+
+        document.getElementById('transportType').addEventListener('change', syncLogWithServer);
+        document.getElementById('dietType').addEventListener('change', syncLogWithServer);
+        document.getElementById('wasteType').addEventListener('change', syncLogWithServer);
+        document.getElementById('logDate').addEventListener('change', syncLogWithServer);
+
+        async function syncLogWithServer() {
+            const payload = {
+                date: document.getElementById('logDate').value,
+                transport_type: document.getElementById('transportType').value,
+                distance: document.getElementById('distance').value,
+                electricity: document.getElementById('electricity').value,
+                gas: document.getElementById('gas').value,
+                diet_type: document.getElementById('dietType').value,
+                waste_type: document.getElementById('wasteType').value,
+                waste_weight: document.getElementById('wasteWeight').value
+            };
+
+            // Post values to regional ledger endpoint
+            await fetch('/api/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            refreshAnalytics();
+        }
+
+        async function refreshAnalytics() {
+            const res = await fetch('/api/history');
+            const history = await res.json();
+            
+            if(history.length === 0) return;
+
+            // Target current date entry
+            const activeDate = document.getElementById('logDate').value;
+            const currentEntry = history.find(item => item.date === activeDate) || history[0];
+
+            document.getElementById('lblTotalDaily').innerText = currentEntry.total;
+            renderChart(currentEntry.breakdown);
+            renderTimeline(history);
+        }
+
+        function renderChart(breakdown) {
+            const ctx = document.getElementById('ecoPlatformChart').getContext('2d');
+            if (ecoChart) {
+                ecoChart.data.labels = Object.keys(breakdown);
+                ecoChart.data.datasets[0].data = Object.values(breakdown);
+                ecoChart.update();
+            } else {
+                ecoChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: Object.keys(breakdown),
+                        datasets: [{
+                            data: Object.values(breakdown),
+                            backgroundColor: ['rgba(16, 185, 129, 0.2)', 'rgba(59, 130, 246, 0.2)', 'rgba(245, 158, 11, 0.2)', 'rgba(168, 85, 247, 0.2)'],
+                            borderColor: ['#10b981', '#3b82f6', '#f59e0b', '#a855f7'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { r: { grid: { color: '#334155' }, angleLines: { color: '#334155' }, ticks: { display: false } } },
+                        plugins: { legend: { labels: { color: '#94a3b8' }, position: 'bottom' } }
+                    }
+                });
+            }
+        }
+
+        function renderTimeline(history) {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = '';
+            history.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "relative pl-4 mb-2";
+                div.innerHTML = `
+                    <div class="absolute w-2 h-2 bg-emerald-500 rounded-full -left-[21px] top-1"></div>
+                    <div class="flex justify-between items-center text-slate-300">
+                        <span class="font-mono font-bold">${item.date}</span>
+                        <span class="bg-slate-800 text-slate-400 font-semibold px-2 py-0.5 rounded">${item.total} kg CO₂e</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.onload = syncLogWithServer;
+    </script>
+</body>
+</html>
