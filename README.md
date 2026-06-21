@@ -1,4 +1,4 @@
-# EcoTrack — Carbon Footprint Awareness Platform
+# CarboTrack — Carbon Footprint Awareness Platform
 
 EcoTrack is a full-stack web application built to help individuals log, visualize, and systematically reduce their daily greenhouse gas environmental footprint. The platform tracks parameters across four primary lifestyle vectors: **Mobility (Transport)**, **Utilities (Home Energy)**, **Nutrition (Diet)**, and **Material Loops (Waste Management)**. 
 
